@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Invitation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .bg-custom {
+      background-image: url('https://image2url.com/r2/default/images/1770441145456-544a21a4-186c-4af6-837c-138c3aab0072.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.7); /* Slightly more transparent */
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .font-playfair {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .no-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .yes-btn {
+      background-color: #d14d72; /* A sophisticated muted rose color */
+      transition: all 0.3s ease;
+    }
+
+    .yes-btn:hover {
+      transform: translateY(-2px);
+      background-color: #be375f;
+      box-shadow: 0 4px 20px rgba(209, 77, 114, 0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+ </head>
+ <body class="h-full bg-custom">
+  <main class="h-full w-full flex items-center justify-center p-6 bg-black/10"> <div id="question-card" class="text-center max-w-md w-full p-10 glass-effect shadow-2xl">
+    <h1 id="question" class="font-playfair text-4xl md:text-5xl text-gray-800 mb-10">Will you be my Valentine?</h1>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+      <button id="yes-btn" class="yes-btn px-10 py-3 text-white text-lg font-semibold tracking-wide rounded-full">
+        YES
+      </button> 
+      <button id="no-btn" class="no-btn px-10 py-3 bg-white/50 text-gray-600 text-lg font-semibold rounded-full border border-gray-300">
+        NO
+      </button>
+    </div>
+    <p id="hint-text" class="mt-8 text-gray-600 italic opacity-0 transition-opacity duration-500 font-medium">Are you sure?</p>
+   </div>
+
+   <div id="success-screen" class="text-center max-w-md w-full p-12 glass-effect shadow-2xl hidden">
+    <h1 id="success-message" class="font-playfair text-4xl text-gray-800 mb-4 italic">Yayyyyy!!</h1>
+    <p class="text-gray-700 text-xl tracking-tight">See you on the 14th, I love you!</p>
+   </div>
+
+  </main>
+
+  <script>
+    let noClickCount = 0;
+    const noBtn = document.getElementById('no-btn');
+    const yesBtn = document.getElementById('yes-btn');
+    const hintText = document.getElementById('hint-text');
+    const questionCard = document.getElementById('question-card');
+    const successScreen = document.getElementById('success-screen');
+    
+    const hintMessages = [
+      "Sure na yan?",
+      "Grabe, di mo na ba ako love?",
+      "Nagmamakaawa na ako oh",
+      "Erich Chlouie, please?",
+      "Mag yes ka na pls?"
+    ];
+    
+    noBtn.addEventListener('click', () => {
+      noClickCount++;
+      // Shrink logic
+      const scale = Math.max(0.2, 1 - (noClickCount * 0.15));
+      noBtn.style.transform = `scale(${scale})`;
+      
+      // Update hint text
+      hintText.style.opacity = '1';
+      const messageIndex = Math.min(noClickCount - 1, hintMessages.length - 1);
+      hintText.textContent = hintMessages[messageIndex];
+      
+      // Make "Yes" button more prominent as "No" shrinks
+      const yesScale = 1 + (noClickCount * 0.1);
+      yesBtn.style.transform = `scale(${Math.min(yesScale, 1.4)})`;
+      
+      if (noClickCount >= 6) {
+        noBtn.style.display = 'none';
+        hintText.textContent = "Sapilitan na 'to 😠";
+      }
+    });
+    
+    yesBtn.addEventListener('click', () => {
+      questionCard.classList.add('hidden');
+      successScreen.classList.remove('hidden');
+    });
+  </script>
+ </body>
+</html>
