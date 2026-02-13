@@ -22,7 +22,7 @@
     }
 
     .glass-effect {
-      background: rgba(255, 255, 255, 0.7); /* Slightly more transparent */
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(10px);
       border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.4);
@@ -37,7 +37,7 @@
     }
     
     .yes-btn {
-      background-color: #d14d72; /* A sophisticated muted rose color */
+      background-color: #d14d72;
       transition: all 0.3s ease;
     }
 
@@ -92,16 +92,14 @@
     
     noBtn.addEventListener('click', () => {
       noClickCount++;
-      // Shrink logic
+
       const scale = Math.max(0.2, 1 - (noClickCount * 0.15));
       noBtn.style.transform = `scale(${scale})`;
       
-      // Update hint text
       hintText.style.opacity = '1';
       const messageIndex = Math.min(noClickCount - 1, hintMessages.length - 1);
       hintText.textContent = hintMessages[messageIndex];
       
-      // Make "Yes" button more prominent as "No" shrinks
       const yesScale = 1 + (noClickCount * 0.1);
       yesBtn.style.transform = `scale(${Math.min(yesScale, 1.4)})`;
       
